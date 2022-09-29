@@ -7,7 +7,7 @@ import Filter from './Filter';
 class App extends Component {
   state = {
     contacts: [],
-    filter: '',
+    filter: '', //cant understand why we need it
   };
   handleInputChange = event => {
     const { name, value } = event.currentTarget;
@@ -41,34 +41,37 @@ class App extends Component {
     this.setState({
       contacts: this.state.contacts.filter(removed => removed.id !== id),
     });
-  renderContactList = arr =>
-    arr.map(element => (
-      <div key={element.id} className={css.renderDiv}>
-        {`${element.name}: ${element.number} `}
-        <button type="button" onClick={() => this.deleteElement(element.id)}>
-          Delete
-        </button>
-      </div>
-    ));
-  filterContacts = arr =>
-    arr.filter(el =>
-      el.name
-        .toLocaleUpperCase()
-        .includes(this.state.filter.toLocaleUpperCase())
-    ) || this.state.contacts;
+  saveArray;
+  filterContacts = (str = '') => {
+    if (str.length === 0) {
+      this.saveArray !== undefined &&
+        this.setState({ contacts: [...this.saveArray] });
+    } else {
+      this.saveArray = [...this.state.contacts];
+      this.setState({
+        contacts: this.state.contacts.filter(remain =>
+          remain.name.includes(str)
+        ),
+      });
+    }
+  };
   render() {
     return (
       <div>
         <h1 className={css.title}>Phonebook</h1>
-        <ContactForm
-          handleSubmit={this.handleSubmit}
-        />
+        <ContactForm handleSubmit={this.handleSubmit} />
         <h2 className={css.title}>Contacts</h2>
-        <Filter handleInputChange={this.handleInputChange} />
+        <Filter
+          {...{
+            filterContacts: this.filterContacts,
+            filter: this.state.filter,
+          }}
+        />
         <ContactList
-          state={this.state}
-          renderContactList={this.renderContactList}
-          filterContacts={this.filterContacts}
+          {...{
+            state: this.state,
+            deleteElement: this.deleteElement,
+          }}
         />
       </div>
     );

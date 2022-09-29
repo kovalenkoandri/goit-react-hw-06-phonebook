@@ -1,4 +1,5 @@
 import css from './ContactForm.module.css';
+import PropTypes from 'prop-types';
 const ContactForm = props => (
   <form className={css.phonebookForm} onSubmit={props.handleSubmit}>
     <label htmlFor="name">Name</label>
@@ -25,3 +26,6 @@ const ContactForm = props => (
 );
 
 export default ContactForm;
+ContactForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
