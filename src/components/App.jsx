@@ -58,29 +58,27 @@ class App extends Component {
       contacts: this.state.contacts.filter(removed => removed.id !== id),
     });
   };
-  saveArray = [...this.state.contacts];
+  saveArray;
+  preFilterSave = true;
   filterContacts = (str = '') => {
-    console.log(this.saveArray);
     //while str search input is empty
     if (
       str.length === 0 &&
       this.saveArray.length !== 0 &&
       this.saveArray.length !== this.state.contacts.length
     ) {
-      console.log(this.saveArray);
       this.setState({ contacts: [...this.saveArray] });
     } else {
       //if user typed smth in filter input
-      if (this.state.contacts.length !== 0) {
+      if (this.preFilterSave) {
         this.saveArray = [...this.state.contacts];
+        this.preFilterSave = false;
       }
       this.setState({
         contacts: this.state.contacts.filter(remain =>
           remain.name.includes(str)
-        ),
-      });
-      console.log(this.saveArray);
-      console.log(this.state.contacts);
+          ),
+        });
     }
   };
   render() {
