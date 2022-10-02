@@ -63,8 +63,8 @@ class App extends Component {
   filterContacts = (str = '') => {
     //while str search input is empty
     if (
-      this.saveArray !== undefined &&
       str.length === 0 &&
+      this.saveArray !== undefined &&
       this.saveArray.length !== 0 &&
       this.saveArray.length !== this.state.contacts.length
     ) {
