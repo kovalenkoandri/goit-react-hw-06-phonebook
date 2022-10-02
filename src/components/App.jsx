@@ -63,6 +63,7 @@ class App extends Component {
   filterContacts = (str = '') => {
     //while str search input is empty
     if (
+      this.saveArray !== undefined &&
       str.length === 0 &&
       this.saveArray.length !== 0 &&
       this.saveArray.length !== this.state.contacts.length
@@ -77,8 +78,8 @@ class App extends Component {
       this.setState({
         contacts: this.state.contacts.filter(remain =>
           remain.name.includes(str)
-          ),
-        });
+        ),
+      });
     }
   };
   render() {
