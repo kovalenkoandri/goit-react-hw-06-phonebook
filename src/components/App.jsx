@@ -52,24 +52,35 @@ class App extends Component {
         element && localStorage.setItem(element.id, JSON.stringify(element))
     );
   }
-  deleteElement = id =>
-  {
+  deleteElement = id => {
     localStorage.removeItem(id);
     this.setState({
       contacts: this.state.contacts.filter(removed => removed.id !== id),
-    })};
-  saveArray;
+    });
+  };
+  saveArray = [...this.state.contacts];
   filterContacts = (str = '') => {
-    if (str.length === 0) {
-      this.saveArray !== undefined &&
-        this.setState({ contacts: [...this.saveArray] });
+    console.log(this.saveArray);
+    //while str search input is empty
+    if (
+      str.length === 0 &&
+      this.saveArray.length !== 0 &&
+      this.saveArray.length !== this.state.contacts.length
+    ) {
+      console.log(this.saveArray);
+      this.setState({ contacts: [...this.saveArray] });
     } else {
-      this.saveArray = [...this.state.contacts];
+      //if user typed smth in filter input
+      if (this.state.contacts.length !== 0) {
+        this.saveArray = [...this.state.contacts];
+      }
       this.setState({
         contacts: this.state.contacts.filter(remain =>
           remain.name.includes(str)
         ),
       });
+      console.log(this.saveArray);
+      console.log(this.state.contacts);
     }
   };
   render() {
@@ -81,7 +92,7 @@ class App extends Component {
         <Filter
           {...{
             filterContacts: this.filterContacts,
-            filter: this.state.filter,
+            // filter: this.state.filter,
           }}
         />
         <ContactList

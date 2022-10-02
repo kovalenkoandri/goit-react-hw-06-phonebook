@@ -2,7 +2,7 @@ import css from './Filter.module.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 export default class Filter extends Component {
-  onChange = event => this.props.filterContacts(event.target.value);
+  onChange = event => this.props.filterContacts(event.currentTarget.value);
   render() {
      return (
        <>
@@ -20,5 +20,5 @@ export default class Filter extends Component {
 }
 Filter.propTypes = {
   filterContacts: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
+  // filter: PropTypes.string.isRequired,
 };
