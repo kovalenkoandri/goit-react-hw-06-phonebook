@@ -28,7 +28,7 @@ class App extends Component {
       contacts: [
         ...this.state.contacts,
         {
-          id: nanoid(),
+          id: nanoid(21),
           name: event.currentTarget.elements.name.value,
           number: event.currentTarget.elements.number.value,
         },
@@ -37,6 +37,23 @@ class App extends Component {
     event.currentTarget.elements.name.value = '';
     event.currentTarget.elements.number.value = '';
   };
+  componentDidMount() {
+    const LSvalues = Object.values(localStorage);
+    console.log(LSvalues);
+    const parsedLS = [];
+    LSvalues.forEach(element => parsedLS.push(JSON.parse(element)));
+    const filtered = parsedLS.filter(
+      element => element.id && element.id.length === 21
+    );
+    console.log(filtered);
+    this.setState({ contacts: [...filtered] });
+  }
+  componentDidUpdate() {
+    this.state.contacts.forEach(
+      element =>
+        element && localStorage.setItem(element.id, JSON.stringify(element))
+    );
+  }
   deleteElement = id =>
     this.setState({
       contacts: this.state.contacts.filter(removed => removed.id !== id),
