@@ -39,13 +39,11 @@ class App extends Component {
   };
   componentDidMount() {
     const LSvalues = Object.values(localStorage);
-    console.log(LSvalues);
     const parsedLS = [];
     LSvalues.forEach(element => parsedLS.push(JSON.parse(element)));
     const filtered = parsedLS.filter(
       element => element.id && element.id.length === 21
     );
-    console.log(filtered);
     this.setState({ contacts: [...filtered] });
   }
   componentDidUpdate() {
@@ -55,9 +53,11 @@ class App extends Component {
     );
   }
   deleteElement = id =>
+  {
+    localStorage.removeItem(id);
     this.setState({
       contacts: this.state.contacts.filter(removed => removed.id !== id),
-    });
+    })};
   saveArray;
   filterContacts = (str = '') => {
     if (str.length === 0) {
