@@ -7,7 +7,7 @@ import Filter from './Filter';
 class App extends Component {
   state = {
     contacts: [],
-    filter: '', //cant understand why we need it
+    // filter: '', //cant understand why we need it
   };
   handleInputChange = event => {
     const { name, value } = event.currentTarget;
