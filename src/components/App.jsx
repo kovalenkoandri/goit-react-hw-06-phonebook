@@ -9,10 +9,10 @@ class App extends Component {
     contacts: [],
     // filter: '', //cant understand why we need it
   };
-  handleInputChange = event => {
-    const { name, value } = event.currentTarget;
-    this.setState({ [name]: value });
-  };
+  // handleInputChange = event => { //cant understand why we need it
+  //   const { name, value } = event.currentTarget;
+  //   this.setState({ [name]: value });
+  // };
   handleSubmit = event => {
     event.preventDefault();
     for (const duplicate of this.state.contacts) {
