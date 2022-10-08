@@ -7,12 +7,24 @@ import Filter from './Filter';
 class App extends Component {
   state = {
     contacts: [],
-    // filter: '', //cant understand why we need it
   };
-  // handleInputChange = event => { //cant understand why we need it
-  //   const { name, value } = event.currentTarget;
-  //   this.setState({ [name]: value });
-  // };
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));   
+    }
+  }
+  deleteElement = id => {
+    this.setState({
+      contacts: this.state.contacts.filter(removed => removed.id !== id),
+    });
+  };
   handleSubmit = event => {
     event.preventDefault();
     for (const duplicate of this.state.contacts) {
@@ -36,27 +48,6 @@ class App extends Component {
     });
     event.currentTarget.elements.name.value = '';
     event.currentTarget.elements.number.value = '';
-  };
-  componentDidMount() {
-    const LSvalues = Object.values(localStorage);
-    const parsedLS = [];
-    LSvalues.forEach(element => parsedLS.push(JSON.parse(element)));
-    const filtered = parsedLS.filter(
-      element => element.id && element.id.length === 21
-    );
-    this.setState({ contacts: [...filtered] });
-  }
-  componentDidUpdate() {
-    this.state.contacts.forEach(
-      element =>
-        element && localStorage.setItem(element.id, JSON.stringify(element))
-    );
-  }
-  deleteElement = id => {
-    localStorage.removeItem(id);
-    this.setState({
-      contacts: this.state.contacts.filter(removed => removed.id !== id),
-    });
   };
   saveArray;
   preFilterSave = true;
