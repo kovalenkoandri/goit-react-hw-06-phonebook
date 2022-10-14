@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import ContactList from './ContactList';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
-export default function App() {
+const App = () => {
   const [state, setState] = useState(
     () => JSON.parse(localStorage.getItem('contacts')) || []
   );
@@ -12,7 +12,7 @@ export default function App() {
   const [number, setNumber] = useState('');
   const [filter, setFilter] = useState('');
   const [saveArray, setSaveArray] = useState([]);
-  const [preFilterSave, setPreFilterSave] = useState( true);
+  const [preFilterSave, setPreFilterSave] = useState(true);
   const handleChageName = event => setName(event.target.value);
   const handleChageNumber = event => setNumber(event.target.value);
   useEffect(() => {
@@ -51,21 +51,21 @@ export default function App() {
       saveArray !== undefined &&
       saveArray.length !== 0 &&
       saveArray.length !== state.length
-      ) {
+    ) {
       setState(prevState => [...prevState, ...saveArray]);
       setFilter('');
-      } else {
-        //if user typed smth in filter input
-        if (preFilterSave) {
-          setSaveArray(prev => [...prev, ...state]);
-          setPreFilterSave(false);
-          console.log(preFilterSave);
+    } else {
+      //if user typed smth in filter input
+      if (preFilterSave) {
+        setSaveArray(prev => [...prev, ...state]);
+        setPreFilterSave(false);
+        console.log(preFilterSave);
         setFilter(str);
       }
       setFilter(str);
       setState(prevState => {
-       return prevState.filter(remain => remain.name.includes(str))}
-      );
+        return prevState.filter(remain => remain.name.includes(str));
+      });
     }
   };
   return (
@@ -93,4 +93,5 @@ export default function App() {
       />
     </div>
   );
-}
+};
+export default App;
