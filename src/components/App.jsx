@@ -16,8 +16,12 @@ const App = () => {
   const handleChageName = event => setName(event.target.value);
   const handleChageNumber = event => setNumber(event.target.value);
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(state));
-  }, [state]);
+    if (saveArray.length > state.length) {
+      localStorage.setItem('contacts', JSON.stringify(saveArray));
+    } else {
+      localStorage.setItem('contacts', JSON.stringify(state));
+    }
+  }, [state, saveArray]);
 
   const deleteElement = id =>
     setState(prevState => prevState.filter(removed => removed.id !== id));
