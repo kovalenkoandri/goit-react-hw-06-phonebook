@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 export default class ContactList extends Component {
   render() {
-    const { contacts } = this.props.state || [];
-    const {  deleteElement } = this.props;
+    const { state } = this.props || [];
+    const { deleteElement } = this.props;
+    // console.log(state);
     return (
       <ul>
-        {contacts.map(element => {
+        {state.map(element => {
           const { id, name, number } = element;
           return (
             <li key={id} className={css.renderLi}>
@@ -28,7 +29,7 @@ export default class ContactList extends Component {
 }
 ContactList.propTypes = {
   deleteElement: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  state: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
   // contacts: PropTypes.arrayOf(
   //   PropTypes.shape({             //this sample does NOT through any error
   //     id: PropTypes.node.isRequired,
@@ -36,4 +37,4 @@ ContactList.propTypes = {
   //     number: PropTypes.func.isRequired,
   //   })
   //   ),
-  };
+};

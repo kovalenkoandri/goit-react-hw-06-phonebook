@@ -1,33 +1,30 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 import css from './App.module.css';
 import { nanoid } from 'nanoid';
 import ContactList from './ContactList';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
-class App extends Component {
-  state = {
-    contacts: [],
-  };
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));   
-    }
-  }
-  deleteElement = id => {
-    this.setState({
-      contacts: this.state.contacts.filter(removed => removed.id !== id),
-    });
-  };
-  handleSubmit = event => {
+export default function App() {
+  const [state, setState] = useState(
+    () => JSON.parse(localStorage.getItem('contacts')) || []
+  );
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [filter, setFilter] = useState('');
+  const [saveArray, setSaveArray] = useState([]);
+  const [preFilterSave, setPreFilterSave] = useState( true);
+  const handleChageName = event => setName(event.target.value);
+  const handleChageNumber = event => setNumber(event.target.value);
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(state));
+  }, [state]);
+
+  const deleteElement = id =>
+    setState(prevState => prevState.filter(removed => removed.id !== id));
+
+  const handleSubmit = event => {
     event.preventDefault();
-    for (const duplicate of this.state.contacts) {
+    for (const duplicate of state) {
       if (
         event.currentTarget.elements.name.value.toLocaleUpperCase() ===
         duplicate.name.toLocaleUpperCase()
@@ -36,64 +33,64 @@ class App extends Component {
         return;
       }
     }
-    this.setState({
-      contacts: [
-        ...this.state.contacts,
-        {
-          id: nanoid(21),
-          name: event.currentTarget.elements.name.value,
-          number: event.currentTarget.elements.number.value,
-        },
-      ],
-    });
-    event.currentTarget.elements.name.value = '';
-    event.currentTarget.elements.number.value = '';
+    setState(prevState => [
+      ...prevState,
+      {
+        id: nanoid(21),
+        name: name,
+        number: number,
+      },
+    ]);
+    setName('');
+    setNumber('');
   };
-  saveArray;
-  preFilterSave = true;
-  filterContacts = (str = '') => {
+  const filterContacts = (str = '') => {
     //while str search input is empty
     if (
       str.length === 0 &&
-      this.saveArray !== undefined &&
-      this.saveArray.length !== 0 &&
-      this.saveArray.length !== this.state.contacts.length
-    ) {
-      this.setState({ contacts: [...this.saveArray] });
-    } else {
-      //if user typed smth in filter input
-      if (this.preFilterSave) {
-        this.saveArray = [...this.state.contacts];
-        this.preFilterSave = false;
+      saveArray !== undefined &&
+      saveArray.length !== 0 &&
+      saveArray.length !== state.length
+      ) {
+      setState(prevState => [...prevState, ...saveArray]);
+      setFilter('');
+      } else {
+        //if user typed smth in filter input
+        if (preFilterSave) {
+          setSaveArray(prev => [...prev, ...state]);
+          setPreFilterSave(false);
+          console.log(preFilterSave);
+        setFilter(str);
       }
-      this.setState({
-        contacts: this.state.contacts.filter(remain =>
-          remain.name.includes(str)
-        ),
-      });
+      setFilter(str);
+      setState(prevState => {
+       return prevState.filter(remain => remain.name.includes(str))}
+      );
     }
   };
-  render() {
-    return (
-      <div>
-        <h1 className={css.title}>Phonebook</h1>
-        <ContactForm handleSubmit={this.handleSubmit} />
-        <h2 className={css.title}>Contacts</h2>
-        <Filter
-          {...{
-            filterContacts: this.filterContacts,
-            // filter: this.state.filter,
-          }}
-        />
-        <ContactList
-          {...{
-            state: this.state,
-            deleteElement: this.deleteElement,
-          }}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h1 className={css.title}>Phonebook</h1>
+      <ContactForm
+        handleSubmit={handleSubmit}
+        handleChageName={handleChageName}
+        handleChageNumber={handleChageNumber}
+        name={name}
+        number={number}
+      />
+      <h2 className={css.title}>Contacts</h2>
+      <Filter
+        {...{
+          filterContacts: filterContacts,
+          filter: filter,
+        }}
+      />
+      <ContactList
+        {...{
+          state: state,
+          deleteElement: deleteElement,
+        }}
+      />
+    </div>
+  );
 }
-
-export default App;

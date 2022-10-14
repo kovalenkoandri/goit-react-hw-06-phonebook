@@ -11,6 +11,6 @@
   transition-delay: 0;
 }
 .renderBtn:hover {
-  transform: rotateX(360deg);
+  /* transform: rotateX(360deg); */
   cursor: pointer;
 }
