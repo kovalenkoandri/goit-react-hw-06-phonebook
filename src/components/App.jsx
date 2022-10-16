@@ -76,9 +76,9 @@ const App = () => {
     <div>
       <h1 className={css.title}>Phonebook</h1>
       <ContactForm
-        handleSubmit={handleSubmit}
-        handleChageName={handleChageName}
-        handleChageNumber={handleChageNumber}
+        onSubmit={handleSubmit}
+        onChageName={handleChageName}
+        onChageNumber={handleChageNumber}
         name={name}
         number={number}
       />

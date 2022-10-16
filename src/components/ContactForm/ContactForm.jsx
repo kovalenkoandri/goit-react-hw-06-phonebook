@@ -1,17 +1,13 @@
 import css from './ContactForm.module.css';
 import PropTypes from 'prop-types';
 const ContactForm = ({
-  handleSubmit,
-  handleChageName,
-  handleChageNumber,
+  onSubmit,
+  onChageName,
+  onChageNumber,
   name,
   number,
 }) => (
-  <form
-    className={css.phonebookForm}
-    onSubmit={handleSubmit}
-    autoComplete="off"
-  >
+  <form className={css.phonebookForm} onSubmit={onSubmit} autoComplete="off">
     <label htmlFor="name">Name</label>
     <input
       type="text"
@@ -21,7 +17,7 @@ const ContactForm = ({
       title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
       required
       className={css.inputName}
-      onChange={handleChageName}
+      onChange={onChageName}
       value={name}
     />
     <label htmlFor="number">Number</label>
@@ -32,7 +28,7 @@ const ContactForm = ({
       title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
       required
       className={css.inputName}
-      onChange={handleChageNumber}
+      onChange={onChageNumber}
       value={number}
     />
     <button type="submit">Add contact</button>
@@ -41,9 +37,9 @@ const ContactForm = ({
 
 export default ContactForm;
 ContactForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handleChageName: PropTypes.func.isRequired,
-  handleChageNumber: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onChageName: PropTypes.func.isRequired,
+  onChageNumber: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
 };
