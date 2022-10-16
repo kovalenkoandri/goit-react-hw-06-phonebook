@@ -46,7 +46,7 @@ const App = () => {
   };
   const getVisibleContacts = () =>
     contacts.filter(contact =>
-      contact.name.toUpperCase().includes(filter.toUpperCase())
+      contact.name.toLocaleUpperCase().includes(filter.toLocaleUpperCase())
     );
   return (
     <div>
