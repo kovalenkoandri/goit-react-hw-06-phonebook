@@ -5,30 +5,26 @@ import ContactList from './ContactList';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 const App = () => {
-  const [state, setState] = useState(
+  const [contacts, setContacts] = useState(
     () => JSON.parse(localStorage.getItem('contacts')) || []
   );
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [filter, setFilter] = useState('');
-  const [saveArray, setSaveArray] = useState([]);
-  const [preFilterSave, setPreFilterSave] = useState(true);
   const handleChageName = event => setName(event.target.value);
   const handleChageNumber = event => setNumber(event.target.value);
   useEffect(() => {
-    if (saveArray.length > state.length) {
-      localStorage.setItem('contacts', JSON.stringify(saveArray));
-    } else {
-      localStorage.setItem('contacts', JSON.stringify(state));
-    }
-  }, [state, saveArray]);
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const deleteElement = id =>
-    setState(prevState => prevState.filter(removed => removed.id !== id));
+    setContacts(prevState => prevState.filter(removed => removed.id !== id));
+  
+  const changeFilter = event => setFilter(event.target.value); 
 
   const handleSubmit = event => {
     event.preventDefault();
-    for (const duplicate of state) {
+    for (const duplicate of contacts) {
       if (
         event.currentTarget.elements.name.value.toLocaleUpperCase() ===
         duplicate.name.toLocaleUpperCase()
@@ -37,7 +33,7 @@ const App = () => {
         return;
       }
     }
-    setState(prevState => [
+    setContacts(prevState => [
       ...prevState,
       {
         id: nanoid(21),
@@ -48,30 +44,10 @@ const App = () => {
     setName('');
     setNumber('');
   };
-  const filterContacts = (str = '') => {
-    //while str search input is empty
-    if (
-      str.length === 0 &&
-      saveArray !== undefined &&
-      saveArray.length !== 0 &&
-      saveArray.length !== state.length
-    ) {
-      setState(prevState => [...prevState, ...saveArray]);
-      setFilter('');
-    } else {
-      //if user typed smth in filter input
-      if (preFilterSave) {
-        setSaveArray(prev => [...prev, ...state]);
-        setPreFilterSave(false);
-        console.log(preFilterSave);
-        setFilter(str);
-      }
-      setFilter(str);
-      setState(prevState => {
-        return prevState.filter(remain => remain.name.includes(str));
-      });
-    }
-  };
+  const getVisibleContacts = () =>
+    contacts.filter(contact =>
+      contact.name.toUpperCase().includes(filter.toUpperCase())
+    );
   return (
     <div>
       <h1 className={css.title}>Phonebook</h1>
@@ -85,13 +61,13 @@ const App = () => {
       <h2 className={css.title}>Contacts</h2>
       <Filter
         {...{
-          filterContacts: filterContacts,
-          filter: filter,
+          onChange: changeFilter,
+          value: filter,
         }}
       />
       <ContactList
         {...{
-          state: state,
+          contacts: getVisibleContacts(),
           deleteElement: deleteElement,
         }}
       />

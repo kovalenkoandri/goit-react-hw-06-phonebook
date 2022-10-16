@@ -1,7 +1,6 @@
 import css from './Filter.module.css';
 import PropTypes from 'prop-types';
-const Filter = ({ filterContacts, filter }) => {
-  const onChange = event => filterContacts(event.target.value);
+const Filter = ({ onChange, value }) => {
   return (
     <>
       <label htmlFor="filter">Find contacts by name</label>
@@ -10,7 +9,7 @@ const Filter = ({ filterContacts, filter }) => {
         name="filter"
         className={css.inputName}
         onChange={onChange}
-        value={filter}
+        value={value}
       />
     </>
   );
@@ -18,6 +17,6 @@ const Filter = ({ filterContacts, filter }) => {
 
 export default Filter;
 Filter.propTypes = {
-  filterContacts: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };

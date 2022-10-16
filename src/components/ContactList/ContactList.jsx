@@ -1,8 +1,8 @@
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
-const ContactList = ({ deleteElement, state = [] }) => (
+const ContactList = ({ deleteElement, contacts }) => (
   <ul>
-    {state.map(element => {
+    {contacts.map(element => {
       const { id, name, number } = element;
       return (
         <li key={id} className={css.renderLi}>
@@ -23,5 +23,5 @@ const ContactList = ({ deleteElement, state = [] }) => (
 export default ContactList;
 ContactList.propTypes = {
   deleteElement: PropTypes.func.isRequired,
-  state: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  contacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 };
