@@ -8,11 +8,7 @@ const App = () => {
   const [contacts, setContacts] = useState(
     () => JSON.parse(localStorage.getItem('contacts')) || []
   );
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
   const [filter, setFilter] = useState('');
-  const handleChageName = event => setName(event.target.value);
-  const handleChageNumber = event => setNumber(event.target.value);
   useEffect(() => {
       localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
@@ -22,27 +18,20 @@ const App = () => {
   
   const changeFilter = event => setFilter(event.target.value); 
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    for (const duplicate of contacts) {
-      if (
-        event.currentTarget.elements.name.value.toLocaleUpperCase() ===
-        duplicate.name.toLocaleUpperCase()
-      ) {
-        alert(`${duplicate.name} is already in contacts.`);
+  const handleSubmit = (name, number, event )  => {
+    // event.preventDefault(); // except refresh page onSubmit
+      if (contacts.some(el => el.name.toLocaleUpperCase().includes(name.toLocaleUpperCase()))) {
+        alert(`${name} is already in contacts.`);
         return;
       }
-    }
     setContacts(prevState => [
       ...prevState,
       {
         id: nanoid(21),
-        name: name,
-        number: number,
+        name,
+        number,
       },
     ]);
-    setName('');
-    setNumber('');
   };
   const getVisibleContacts = () =>
     contacts.filter(contact =>
@@ -53,10 +42,6 @@ const App = () => {
       <h1 className={css.title}>Phonebook</h1>
       <ContactForm
         onSubmit={handleSubmit}
-        onChageName={handleChageName}
-        onChageNumber={handleChageNumber}
-        name={name}
-        number={number}
       />
       <h2 className={css.title}>Contacts</h2>
       <Filter
