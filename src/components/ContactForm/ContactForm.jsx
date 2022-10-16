@@ -42,4 +42,8 @@ const ContactForm = ({
 export default ContactForm;
 ContactForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  handleChageName: PropTypes.func.isRequired,
+  handleChageNumber: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
 };
