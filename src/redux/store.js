@@ -1,6 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-// import { persistStore, persistReducer } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { createStore } from 'redux';
+import { devToolsEnhancer } from '@redux-devtools/extension';
+import { useSelector } from "react-redux";
+
+// Создай хранилище с configureStore()
+// Используй функцию createSlice()
+// Создай действия сохранения и удаления контакта, а также обновления фильтра
+// Свяжи React-компоненты с Redux-логикой при помощи хуков бибилиотеки react-redux
+// Используй библиотеку Redux Persist для сохранения массива контактов в локальное хранилище
 const initialState = {
   contacts: [],
   filter: '',
@@ -9,20 +15,9 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   return state;
 };
+const enhancer = devToolsEnhancer();
+export const store = createStore(rootReducer, enhancer);
 
-export const store = configureStore({ reducer: rootReducer });
-// Создай хранилище с configureStore()
-// Используй функцию createSlice()
-// Создай действия сохранения и удаления контакта, а также обновления фильтра
-// Свяжи React-компоненты с Redux-логикой при помощи хуков бибилиотеки react-redux
-// Используй библиотеку Redux Persist для сохранения массива контактов в локальное хранилище
-// const persistConfig = {
-//   key: 'root',
-//   storage,
-// };
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
-// export default () => {
-//   let store = createStore(persistedReducer);
-//   let persistor = persistStore(store);
-//   return { store, persistor };
-// };
+export const getContacts = state => state.contacts;
+
+export const getFilter = state => state.filter;
