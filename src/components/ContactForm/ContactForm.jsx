@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const handleChageName = event => setName(event.target.value);
-  const handleChageNumber = event => setNumber(event.target.value);
+  const handleChangeName = event => setName(event.target.value);
+  const handleChangeNumber = event => setNumber(event.target.value);
   return (
     <form className={css.phonebookForm} onSubmit={(event) => onSubmit(name, number, event)} autoComplete="off">
       <label htmlFor="name">Name</label>
@@ -17,7 +17,7 @@ const ContactForm = ({ onSubmit }) => {
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
         className={css.inputName}
-        onChange={handleChageName}
+        onChange={handleChangeName}
         value={name}
       />
       <label htmlFor="number">Number</label>
@@ -28,7 +28,7 @@ const ContactForm = ({ onSubmit }) => {
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
         className={css.inputName}
-        onChange={handleChageNumber}
+        onChange={handleChangeNumber}
         value={number}
       />
       <button type="submit">Add contact</button>

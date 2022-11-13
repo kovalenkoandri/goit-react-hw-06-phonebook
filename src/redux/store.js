@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
 import { devToolsEnhancer } from '@redux-devtools/extension';
 import { useSelector } from "react-redux";
-
+import { nanoid } from 'nanoid';
 // Создай хранилище с configureStore()
 // Используй функцию createSlice()
 // Создай действия сохранения и удаления контакта, а также обновления фильтра
@@ -12,9 +12,13 @@ const initialState = {
   filter: '',
 };
 
-const rootReducer = (state = initialState, action) => {
-  return state;
+export const rootReducer = (state = initialState, action) => {
+  return {
+    contacts: contactsReducer(state.contacts, action),
+    filter: filterReducer(state.filter, action),
+  };
 };
+
 const enhancer = devToolsEnhancer();
 export const store = createStore(rootReducer, enhancer);
 
