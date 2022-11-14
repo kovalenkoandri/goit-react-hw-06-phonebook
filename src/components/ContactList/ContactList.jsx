@@ -1,10 +1,11 @@
 import css from './ContactList.module.css';
 // import PropTypes from 'prop-types';
-import { getContacts } from 'redux/store.js'
+import { getContacts, rmTask } from 'redux/store.js'
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 const ContactList = () => {
+  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  console.log(contacts);
   return (
     <ul>
       {contacts.map(element => {
@@ -16,6 +17,7 @@ const ContactList = () => {
               type="button"
               className={css.renderBtn}
               // onClick={() => deleteElement(id)}
+              onClick={() => dispatch(rmTask(id))}
             >
               Delete
             </button>

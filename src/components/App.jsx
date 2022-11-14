@@ -1,10 +1,11 @@
 // import { useState, useEffect } from 'react';
 import css from './App.module.css';
-import { nanoid } from 'nanoid';
+
 import ContactList from './ContactList';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import { useDispatch } from 'react-redux';
+import { addTask } from 'redux/store';
 const App = () => {
   // const [contacts, setContacts] = useState(
   //   () => JSON.parse(localStorage.getItem('contacts')) || []
@@ -26,12 +27,7 @@ const App = () => {
     //     alert(`${name} is already in contacts.`);
     //     return;
     // }
-    const addTask = (name, number) => {
-      return {
-        type: 'tasks/addTask',
-        payload: { id: nanoid(), name, number },
-      };
-    };
+    
     dispatch(addTask(name, number));
     // setContacts(prevState => [
     //   ...prevState,

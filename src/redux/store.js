@@ -1,5 +1,6 @@
 import { createStore } from 'redux';
 import { devToolsEnhancer } from '@redux-devtools/extension';
+import { nanoid } from 'nanoid';
 // import { useSelector } from "react-redux";
 // import { nanoid } from 'nanoid';
 // Создай хранилище с configureStore()
@@ -11,11 +12,27 @@ const initialState = {
   contacts: [],
   filter: '',
 };
-
+export const addTask = (name, number) => {
+  return {
+    type: 'tasks/addTask',
+    payload: { id: nanoid(), name, number },
+  };
+};
+export const rmTask = id => {
+  return {
+    type: 'tasks/rmTask',
+    payload: id,
+  };
+};
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'tasks/addTask':
       return { ...state, contacts: [...state.contacts, action.payload] };
+    case 'tasks/rmTask':
+      const contacts = state.contacts.filter(
+        removed => removed.id !== action.payload
+      );
+      return { ...state, contacts };
     default:
       return state;
   }
