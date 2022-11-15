@@ -29,14 +29,6 @@ const App = () => {
     // }
     
     dispatch(addTask(name, number));
-    // setContacts(prevState => [
-    //   ...prevState,
-    //   {
-    //     id: nanoid(21),
-    //     name,
-    //     number,
-    //   },
-    // ]);
   };
   // const getVisibleContacts = () =>
   //   contacts.filter(contact =>

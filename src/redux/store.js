@@ -10,7 +10,7 @@ import { nanoid } from 'nanoid';
 // Используй библиотеку Redux Persist для сохранения массива контактов в локальное хранилище
 const initialState = {
   contacts: [],
-  filter: '',
+  filter: 'q',
 };
 export const addTask = (name, number) => {
   return {
@@ -24,6 +24,12 @@ export const rmTask = id => {
     payload: id,
   };
 };
+export const filterTask = value => {
+  return {
+    type: 'tasks/filterTask',
+    payload: value,
+  };
+};
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'tasks/addTask':
@@ -33,6 +39,11 @@ export const rootReducer = (state = initialState, action) => {
         removed => removed.id !== action.payload
       );
       return { ...state, contacts };
+    case 'tasks/filterTask':
+    const visible = state.contacts.filter(element =>
+      element?.name.toLocaleUpperCase().includes(state.filter.toLocaleUpperCase())
+    );
+      return { ...state, contacts: visible };
     default:
       return state;
   }
@@ -40,6 +51,3 @@ export const rootReducer = (state = initialState, action) => {
 
 const enhancer = devToolsEnhancer();
 export const store = createStore(rootReducer, enhancer);
-
-export const getContacts = state => state.contacts;
-export const getFilter = state => state.filter;

@@ -1,6 +1,10 @@
 import css from './Filter.module.css';
-import PropTypes from 'prop-types';
-const Filter = ({ onChange, value }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { filterTask } from 'redux/store.js';
+import { getFilter } from 'redux/selectors';
+const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(getFilter);
   return (
     <>
       <label htmlFor="filter">Find contacts by name</label>
@@ -8,15 +12,11 @@ const Filter = ({ onChange, value }) => {
         type="text"
         name="filter"
         className={css.inputName}
-        onChange={onChange}
-        value={value}
+        onChange={event => dispatch(filterTask(event.target.value))}
+        value={filter}
       />
     </>
   );
 };
 
 export default Filter;
-Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-};
