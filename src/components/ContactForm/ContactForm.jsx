@@ -7,7 +7,11 @@ const ContactForm = ({ onSubmit }) => {
   const handleChangeName = event => setName(event.target.value);
   const handleChangeNumber = event => setNumber(event.target.value);
   return (
-    <form className={css.phonebookForm} onSubmit={(event) => onSubmit(name, number, event)} autoComplete="off">
+    <form
+      className={css.phonebookForm}
+      onSubmit={event => onSubmit(name, number, event)}
+      autoComplete="off"
+    >
       <label htmlFor="name">Name</label>
       <input
         type="text"
@@ -18,7 +22,8 @@ const ContactForm = ({ onSubmit }) => {
         required
         className={css.inputName}
         onChange={handleChangeName}
-        value={name}
+        // value={name}
+        //remove value attributes, the reset will set all the values to blank
       />
       <label htmlFor="number">Number</label>
       <input
@@ -29,7 +34,8 @@ const ContactForm = ({ onSubmit }) => {
         required
         className={css.inputName}
         onChange={handleChangeNumber}
-        value={number}
+        // value={number}
+        // if uncomment from.reset() doesn't work at App.jsx 
       />
       <button type="submit">Add contact</button>
     </form>

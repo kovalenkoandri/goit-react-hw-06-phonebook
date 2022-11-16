@@ -17,20 +17,24 @@ const App = () => {
 
   // const deleteElement = id =>
   //   setContacts(prevState => prevState.filter(removed => removed.id !== id));
-  
-  // const changeFilter = event => setFilter(event.target.value); 
+
+  // const changeFilter = event => setFilter(event.target.value);
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  const handleSubmit = (name, number, event )  => {
+  const handleSubmit = (name, number, event) => {
     event.preventDefault(); // except refresh page onSubmit
     const form = event.target;
-      if (contacts.some(el => el.name.toLocaleUpperCase().includes(name.toLocaleUpperCase()))) {
-          alert(`${name} is already in contacts.`);
-          form.reset(); // doesnt work for me
-          return;
-      }
-      dispatch(addTask(name, number));
-      form.reset(); // doesnt work for me
+    if (
+      contacts.some(el =>
+        el.name.toLocaleUpperCase().includes(name.toLocaleUpperCase())
+      )
+    ) {
+      alert(`${name} is already in contacts.`);
+      form.reset();
+      return;
+    }
+    dispatch(addTask(name, number));
+    form.reset();
   };
   // const getVisibleContacts = () =>
   //   contacts.filter(contact =>
@@ -39,21 +43,23 @@ const App = () => {
   return (
     <div>
       <h1 className={css.title}>Phonebook</h1>
-      <ContactForm
-        onSubmit={handleSubmit}
-      />
+      <ContactForm onSubmit={handleSubmit} />
       <h2 className={css.title}>Contacts</h2>
       <Filter
-        {...{
-          // onChange: changeFilter,
-          // value: filter,
-        }}
+        {
+          ...{
+            // onChange: changeFilter,
+            // value: filter,
+          }
+        }
       />
       <ContactList
-        {...{
-          // contacts: getVisibleContacts(),
-          // deleteElement: deleteElement,
-        }}
+        {
+          ...{
+            // contacts: getVisibleContacts(),
+            // deleteElement: deleteElement,
+          }
+        }
       />
     </div>
   );
