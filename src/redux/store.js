@@ -1,9 +1,4 @@
-import { createStore } from 'redux';
-import { devToolsEnhancer } from '@redux-devtools/extension';
-import { nanoid } from 'nanoid';
-// import { useSelector } from "react-redux";
-// import { nanoid } from 'nanoid';
-// Создай хранилище с configureStore()
+import { configureStore } from '@reduxjs/toolkit';
 // Используй функцию createSlice()
 // Создай действия сохранения и удаления контакта, а также обновления фильтра
 // Свяжи React-компоненты с Redux-логикой при помощи хуков бибилиотеки react-redux
@@ -13,24 +8,7 @@ const initialState = {
   filter: '',
   visibleContacts: [],
 };
-export const addTask = (name, number) => {
-  return {
-    type: 'tasks/addTask',
-    payload: { id: nanoid(), name, number },
-  };
-};
-export const rmTask = id => {
-  return {
-    type: 'tasks/rmTask',
-    payload: id,
-  };
-};
-export const filterTask = value => {
-  return {
-    type: 'tasks/filterTask',
-    payload: value,
-  };
-};
+
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'tasks/addTask':
@@ -54,5 +32,4 @@ export const rootReducer = (state = initialState, action) => {
   }
 };
 
-const enhancer = devToolsEnhancer();
-export const store = createStore(rootReducer, enhancer);
+export const store = configureStore({reducer: rootReducer});

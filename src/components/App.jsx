@@ -4,7 +4,7 @@ import ContactList from './ContactList';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from 'redux/store';
+import { addTask } from 'redux/actions';
 import { getContacts } from 'redux/selectors';
 const App = () => {
   // const [contacts, setContacts] = useState(
@@ -14,9 +14,6 @@ const App = () => {
   // useEffect(() => {
   //     localStorage.setItem('contacts', JSON.stringify(contacts));
   // }, [contacts]);
-
-  // const deleteElement = id =>
-  //   setContacts(prevState => prevState.filter(removed => removed.id !== id));
 
   // const changeFilter = event => setFilter(event.target.value);
   const dispatch = useDispatch();
@@ -53,14 +50,7 @@ const App = () => {
           }
         }
       />
-      <ContactList
-        {
-          ...{
-            // contacts: getVisibleContacts(),
-            // deleteElement: deleteElement,
-          }
-        }
-      />
+      <ContactList />
     </div>
   );
 };

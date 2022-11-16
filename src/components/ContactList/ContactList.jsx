@@ -1,5 +1,5 @@
 import css from './ContactList.module.css';
-import { rmTask } from 'redux/store.js';
+import { rmTask } from 'redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts, getVisibleContacts, getFilter } from 'redux/selectors';
 const ContactList = () => {
