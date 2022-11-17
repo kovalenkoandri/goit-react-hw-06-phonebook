@@ -1,10 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+// import { store } from './redux/store';
 import ReactDOM from 'react-dom/client';
 import App from 'components/App';
 import './index.css';
-// import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from 'redux-persist/integration/react';
+import configureStore from 'redux/store';
+
+const { persistor, store } = configureStore();
 //  const contacts = [
 //  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
 //  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
@@ -15,7 +18,9 @@ import './index.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
