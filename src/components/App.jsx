@@ -4,7 +4,7 @@ import ContactList from './ContactList';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from 'redux/actions';
+import { addTask } from 'redux/tasksSlice';
 import { getContacts } from 'redux/selectors';
 const App = () => {
   // const [contacts, setContacts] = useState(
