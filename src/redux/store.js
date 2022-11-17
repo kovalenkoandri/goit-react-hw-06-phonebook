@@ -1,21 +1,29 @@
 // import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from 'redux/tasksSlice';
-import { createStore } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { configureStore } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 
-const persistConfig = {
-  key: 'root',
-  storage,
-};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    });
+  },
+});
 
-export default () => {
-  let store = createStore(persistedReducer);
-  let persistor = persistStore(store);
-  return { store, persistor };
-};
+export const persistor = persistStore(store);
 // Используй функцию createSlice()
 // Создай действия сохранения и удаления контакта, а также обновления фильтра
 // Свяжи React-компоненты с Redux-логикой при помощи хуков бибилиотеки react-redux

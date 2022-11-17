@@ -1,6 +1,9 @@
 // import { addTask, rmTask, filterTask } from 'redux/actions';
 import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 const initialState = {
   contacts: [],
   filter: '',
@@ -43,5 +46,11 @@ const tasksSlice = createSlice({
     },
   },
 });
+
+const persistConfig = {
+  key: 'tasks',
+  storage,
+};
+
+export const rootReducer = persistReducer(persistConfig, tasksSlice.reducer);
 export const { addTask, rmTask, filterTask } = tasksSlice.actions;
-export const rootReducer = tasksSlice.reducer;
