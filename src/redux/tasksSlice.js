@@ -50,6 +50,7 @@ const tasksSlice = createSlice({
 const persistConfig = {
   key: 'tasks',
   storage,
+  blacklist: ['filter'],
 };
 
 export const rootReducer = persistReducer(persistConfig, tasksSlice.reducer);
